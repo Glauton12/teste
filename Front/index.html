@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Pontuação da Maria</title>
+
+    
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+    <!--ESTILOS-->
+    <link rel="stylesheet" href="estilos.css">
+
+                <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" ></script>
+
+    <!-- Script -->
+    <script>
+
+        // JSON
+        var pontuacao = [];
+
+        // Obter dados da API
+        function obterPontuacao(){
+            $.get("http://localhost:8090/pontuacao", function(dados){
+                
+                // Adicionar ao JSON
+                pontuacao = dados;
+
+                // Limpar tabela
+                $("table tbody").empty();
+
+                // Laço de repetição
+                for(var indice=0; indice<pontuacao.length; indice++){
+
+                    // Estrutura
+                    var estrutura = "<tr>";
+                        estrutura+= "<td>"+pontuacao[indice].jogos+"</td>";
+                        estrutura+= "<td>"+pontuacao[indice].placar+"</td>";
+                        estrutura+= "<td>"+pontuacao[indice].minT+"</td>";
+                        estrutura+= "<td>"+pontuacao[indice].maxT+"</td>";
+                        estrutura+= "<td>"+pontuacao[indice].quebraMin+"</td>";
+                        estrutura+= "<td>"+pontuacao[indice].quebraMax+"</td>";
+                        estrutura+= "<td><button class='btn btn-success'onclick='selecionar("+pontuacao[indice].jogos+")'>selecionar</td>"
+                        estrutura+= "</tr>";
+
+                    // Exibir na tabela
+                    $("table tbody").append(estrutura);
+                
+                }
+
+                
+            });
+        }
+        
+        // Carregar toda a estrutura HTML e CSS
+        $(document).ready(function(){
+
+            // Obter todos as estatísticas de jogos
+            obterPontuacao();            
+
+            // Cadastrar estatítisca
+            $("#btnCadastrar").click(function(){
+                // Obter estatisticas dos jogos
+                var placar =    $("#placar").val();
+                var minT =      $("#minT").val();
+                var maxT =      $("#maxT").val();
+                var quebraMin = $("#quebraMin").val();
+                var quebraMax = $("#quebraMax").val();
+
+                
+                // Estrutura JSON
+                var estrutura = '{"jogos":'+jogos+', "placar":'+placar+', "minT":'+minT+', "maxT":'+maxT+', "quebraMin":'+quebraMin+', "quebraMax":'+quebraMax+'}';
+                console.log(estrutura);
+                
+                // Enviando para a API
+                $.ajax({
+                    url: "http://localhost:8090/pontuacao",
+                    type: "POST",
+                    data: estrutura,
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                        
+                        // Exibir resposta da API
+                        var r = resposta;
+
+                        // Alerta
+                        alert(r.mensagem);
+
+                        // Atualizar a tabela
+                        obterPontuacao();
+                    }
+                });
+            });
+
+        });
+
+        //Selecionar dados do pontuacao
+        function selecionar(jogos){
+        
+            $.ajax({
+                    url: "http://localhost:8090/pontuacao/"+jogos,
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                      
+                        $("#jogos").val(resposta.jogos);
+                        $("#placar").val(resposta.placar);
+                        $("#minT").val(resposta.minT);
+                        $("#maxT").val(resposta.maxT);
+                        $("#quebraMin").val(resposta.quebraMin);
+                        $("#quebraMax").val(resposta.quebraMax);
+                        
+                        $("#btnCadastrar").css("display", "none");
+                        $("#btnAlterar").css("display", "inline-block");
+                        $("#btnRemover").css("display", "inline-block");
+
+                        //Atualizar tabela
+                        obterPontuacao();
+
+                    }
+                });
+        
+        }
+
+        //Remover uma estatística de jogo específica
+        function remover()
+        {
+             var jogos = $("#jogos").val();
+            
+            $.ajax({
+                    url: "http://localhost:8090/pontuacao/"+jogos,
+                    type: "DELETE",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function(resposta){
+                        alert(resposta.mensagem);
+                      
+                    
+                        $("#jogos").val("");
+                        $("#placar").val("");
+                        $("#minT").val("");
+                        $("#maxT").val("");
+                        $("#quebraMin").val("");
+                        $("#quebraMax").val("");
+                        
+                        $("#btnCadastrar").css("display", "inline-block");
+                        $("#btnAlterar").css("display", "none");
+                        $("#btnRemover").css("display", "none");
+
+                        //Atualizar tabela
+                        obterPontuacao();
+
+                    }
+                });
+
+            
+        }
+
+        // Alterar usuário
+        function alterar(){
+
+        // Obter dados
+        var jogos =         $("#jogos").val();
+        var placar =        $("#placar").val();
+        var minT =          $("#minT").val();
+        var maxT =          $("#maxT").val();
+        var quebraMin =     $("#quebraMin").val();
+        var quebraMax =     $("#quebraMax").val();
+
+        // Estrutura JSON
+        var estrutura = '{"jogos":'+jogos+',"placar":'+placar+', "minT":'+minT+', "maxT":'+maxT+', "quebraMin":'+quebraMin+', "quebraMax":'+quebraMax+'}';
+            console.log(estrutura);
+        
+        // Enviando para a API
+        $.ajax({
+            url: "http://localhost:8090/pontuacao",
+            type: "PUT",
+            data: estrutura,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(resposta){
+
+                // Limpar campos
+                $("#jogos").val("");
+                $("#placar").val("");
+                $("#minT").val("");
+                $("#maxT").val("");
+                $("#quebraMin").val("");
+                $("#quebraMax").val("");
+
+                // Botões
+                $("#btnCadastrar").css("display","inline-block");
+                $("#btnAlterar").css("display","none");
+                $("#btnRemover").css("display","none");
+
+                // Alerta
+                alert(resposta.mensagem);
+
+                // Atualizar a tabela
+                obterPontuacao();
+            }
+        });
+        }
+
+    </script>
+
+</head>
+<body>
+        
+    <!-- Formulário -->
+        <form>
+            <input type="text" id="jogos" readonly class="form-control">
+            <input type="text" placeholder="Placar" id="placar" class="form-control">
+            <input type="text" placeholder="Minimo da temporada" id="minT" class="form-control">
+            <input type="text" placeholder="Máximo da temporada" id="maxT" class="form-control">
+            <input type="text" placeholder="Quebra de recorde minimo" id="quebraMin" class="form-control">
+            <input type="text" placeholder="Quebra de recorde máximo" id="quebraMax" class="form-control">
+            <input type="button" id="btnCadastrar" value="Cadastrar" class="btn btn-primary">
+            <input type="button" id="btnAlterar" value="Alterar" onclick="alterar()" class="btn btn-secondary">
+            <input type="button" id="btnRemover" value="Remover" onclick="remover()" class="btn btn-danger">
+        </form>
+    
+        <!-- Tabela -->
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Jogo</th>
+                    <th>Placar</th>
+                    <th>Min. da temporada</th>
+                    <th>Máx. da temporada</th>
+                    <th>Quebra recorde min.</th>
+                    <th>Quebra recorde max.</th>
+                    <th>Selecionar</th>
+                </tr>
+            </thead>
+    
+            <tbody>
+                
+            </tbody>
+        </table>
+    
+</body>
+</html>
