@@ -1,13 +1,13 @@
-![Logo of the project](http://logo_link)
+![Logo of the project](https://github.com/Glauton12/teste/blob/main/Back/publica/read_images/logo.png)
  
 ## Pontuacao_da_Maria
  
-Esse programa cadastra, exclui, seleciona e altera a pontuacao cadastrada.
+this program can insert, select, delete and update new score.
  
  
-## Tecnologia
+## Technology
  
-Aqui estão as tecnologias usadas no projeto:
+here is the technologies used on program:
  
 * JDK 13.0.2
 * Spring Framework
@@ -19,33 +19,43 @@ Aqui estão as tecnologias usadas no projeto:
 * Github
 * Eclipse IDE
 * MySQL
+* Visual studio code
  
  
-## Começando
+## Getting started
  
-* Para instalar o projeto:
->    $ bundle install
-* To create the bank and do as migrations:
->    $ rake db:create db:migrate db:seed
+* To install project:
+>    Clone project in Github and import maven project on eclipse
+* To create the databace:    
+>    install MySQL and create database named spring04
+>    change username and password of DB on application.properties in eclipse
 * To run the project:
->    $ rails s
+>    open eclipse, select PontApplication.java, right click on it and select "run as > java application
+
  
 ## How to use
- 
-Here will be the images and descriptions. Principal content.
+
+![Application.Properties](https://github.com/Glauton12/teste/blob/main/Back/publica/read_images/Application.properties.png)
+![Database](https://github.com/Glauton12/teste/blob/main/Back/publica/read_images/Banco%20de%20dados.png)
+![BodyOfProject](https://github.com/Glauton12/teste/blob/main/Back/publica/read_images/corpo%20do%20projeto.png)
+
+* to test project:
+>    go to front folder and click on index.html 
+
  
  
 ## Features
  
-  - Here will be the features.
- 
+  - Organize score of your season
+  - See your best and worse score
+  - See your best and worse records
  
 ## Links
  
   - Link of deployed application: (if has been deployed)
-  - Repository: https://link_of_repository
+  - Repository: https://github.com/Glauton12/teste
     - In case of sensitive bugs like security vulnerabilities, please contact
-      YOUR EMAIL directly instead of using issue tracker. We value your effort
+      Glauton12@gmail.com directly instead of using issue tracker. We value your effort
       to improve the security and privacy of this project!
  
  
@@ -56,7 +66,7 @@ Here will be the images and descriptions. Principal content.
  
 ## Authors
  
-* **YOUR NAME**: @YOUR_GITHUB_NICKNAME (https://github.com/YOUR_GITHUB_NICKNAME)
+* **Glauton p da silva**: @Glauton12 (https://github.com/Glauton12)
  
  
 Please follow github and join us!
