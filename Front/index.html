@@ -3,8 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Pontuação da Maria</title>
-
     
+    <div>
+        <center>
+        <img width="15%"  src="logo.png" />
+        </center>
+    </div>
     
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -28,8 +32,7 @@
                 
                 // Adicionar ao JSON
                 pontuacao = dados;
-                
-                console.log(dados);
+            
 
                 // Limpar tabela
                 $("table tbody").empty();
@@ -50,10 +53,36 @@
 
                     // Exibir na tabela
                     $("table tbody").append(estrutura);
-
-                
+                    
                 }
                 
+                var pontuacoesMinima = [];
+
+                    for(var indice=0; indice<pontuacao.length; indice++){
+                        pontuacoesMinima.push(pontuacao[indice].minT);
+                    }
+                    console.log(pontuacoesMinima);
+                    console.log(getSmallestNumber(pontuacoesMinima))
+
+                    function getSmallestNumber(min){
+                        return Math.min(...min);
+        
+                    }
+                
+
+                    var pontuacoesMaxima = [];
+
+                    for(var indice=0; indice<pontuacao.length; indice++){
+                        pontuacoesMaxima.push(pontuacao[indice].maxT);
+                    }
+                    console.log(pontuacoesMaxima);
+                    console.log(getBiggestNumber(pontuacoesMaxima))
+
+                    function getBiggestNumber(max){
+                        return Math.max(...max);
+
+                    }
+
                 
             });
         }
@@ -110,9 +139,6 @@
         });
 
 
-
-
-
         //Selecionar dados do pontuacao
         function selecionar(jogos){
         
@@ -141,6 +167,7 @@
                 });
         
         }
+
 
         //Remover uma estatística de jogo específica
         function remover()
@@ -223,31 +250,12 @@
         }
 
     </script>
-    
-    <script>
-
-    for(var indice=0; indice<pontuacao.length; indice++){
-        if (minT === undefined || pontuacao[i].minT < minT){
-            minT = pontuacao[i].minT;
-        }
-
-        if (maxT === undefined || pontuacao[i].maxT > maxT){
-            maxT = pontuacao[i].maxT;
-        console.log(minT)
-        }
-    }
-
-    
-    
-
-
-    </script>
-    
-
 
 </head>
 <body>
-        
+    
+    
+
     <!-- Formulário -->
         <form>
             <input type="text" id="jogos" readonly class="form-control">

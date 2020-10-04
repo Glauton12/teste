@@ -1,11 +1,18 @@
 form{
     width: 20%;
     margin: 50px auto;
-    margin-top: 5%;
+    margin-top: -3%;
 }
 
+div{
+    margin-top: -20px auto;
+}
 
-
+diva{
+    width: 20%;
+    margin: 50px auto;
+    margin-top: -3%;
+}
 
 body{
     background-color: darkturquoise;
